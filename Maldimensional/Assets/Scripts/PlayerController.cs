@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Rigidbody2D rigidbody;
     [SerializeField]
+    private Transform spawnPoint;
+    [SerializeField]
     private Animator animator;
     [SerializeField]
     private Transform feetTransform;
@@ -28,22 +30,49 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float movementSmoothing = 0.05f;
     [SerializeField]
-    private float feetRadius = 0.1f;
+    private float feetExtentY;
     [SerializeField]
     private PlatformSpawner platformSpawner;
+    [SerializeField]
+    private ScrambleBlinker blinker;
 #pragma warning restore
 
+    private AudioManager audioManager;
     private bool facingRight = true;
     private bool isGrounded = false;
     private bool jetPacking = false;
+    private bool paused = true;
     private LayerMask groundMask;
+    private Vector3 feetExtent;
     private Vector3 velocity;
+
+    private void OnEnable() {
+        LoadingFader.onLoadIsFinished += UnPause;
+    }
+
+    private void OnDisable() {
+        LoadingFader.onLoadIsFinished -= UnPause;
+    }
+
+    private void UnPause() {
+        paused = false;
+    }
 
     private void Awake() {
         groundMask = LayerMask.GetMask(new string[] { "Ground" });
+        feetExtent = GetComponent<Collider2D>().bounds.size;
+        feetExtent.y = feetExtentY;
+    }
+
+    private void Start() {
+        audioManager = FindObjectOfType<AudioManager>();
+
+        transform.position = spawnPoint.position;
     }
 
     void Update() {
+        if (paused) return;
+
         float move = 0.0f;
         bool jump = false;
         bool holdJump = false;
@@ -55,20 +84,26 @@ public class PlayerController : MonoBehaviour {
         Move(move, jump, holdJump);
 
         if (isGrounded) {
-            fuelSlider.value += fuelRechargeRate;
+            fuelSlider.value += fuelRechargeRate * Time.deltaTime;
         }
     }
 
     private void FixedUpdate() {
+        if (paused) return;
+
         isGrounded = false;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(feetTransform.position, feetRadius, groundMask);
-        foreach (Collider2D collider in colliders) {
-            if (collider.gameObject != gameObject) {
-                isGrounded = true;
-                jetPacking = false;
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(feetTransform.position, feetExtent, 0.0f, groundMask);
+        if (rigidbody.velocity.y == 0.0f) {
+            foreach (Collider2D collider in colliders) {
+                if (collider.gameObject != gameObject) {
+                    isGrounded = true;
+                    jetPacking = false;
+                }
             }
         }
+        
+        Debug.Log(isGrounded);
     }
 
     private void Move(float move, bool jump, bool holdJump) {
@@ -95,7 +130,7 @@ public class PlayerController : MonoBehaviour {
 
         if (!isGrounded && jetPacking && holdJump) {
             if (FuelLeft()) {
-                fuelSlider.value -= fuelConsumptionRate;
+                fuelSlider.value -= fuelConsumptionRate * Time.deltaTime;
 
                 Vector3 jetpackTargetVelocity = new Vector2(rigidbody.velocity.x, jetpackSpeed);
                 rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, jetpackTargetVelocity, ref velocity, movementSmoothing);
@@ -111,6 +146,9 @@ public class PlayerController : MonoBehaviour {
 
     private void Scramble() {
         platformSpawner.RespawnPlatforms();
+        blinker.ScrambleBlink();
+
+        audioManager.Play("Scramble");
     }
 
     private void Flip() {

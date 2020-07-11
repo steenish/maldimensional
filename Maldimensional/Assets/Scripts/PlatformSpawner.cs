@@ -12,6 +12,10 @@ public class PlatformSpawner : MonoBehaviour {
     [SerializeField]
     private GameObject goalPlatform;
     [SerializeField]
+    private GameObject player;
+    [SerializeField]
+    private GameObject portal;
+    [SerializeField]
     private int numPlatforms = 5;
     [SerializeField]
     private float intersectMargin = 0.0f;
@@ -21,6 +25,8 @@ public class PlatformSpawner : MonoBehaviour {
 
     private Bounds spawnBounds;
     private Bounds goalPlatformBounds;
+    private Bounds playerBounds;
+    private Bounds portalBounds;
     private List<GameObject> platforms;
 
     void Start() {
@@ -30,6 +36,8 @@ public class PlatformSpawner : MonoBehaviour {
         spawnBounds = Camera.main.GetComponent<CameraController>().cameraBounds;
         goalPlatformBounds = goalPlatform.GetComponent<SpriteRenderer>().bounds;
         goalPlatformBounds.Expand(intersectMargin);
+        portalBounds = portal.GetComponent<SpriteRenderer>().bounds;
+        portalBounds.Expand(intersectMargin);
     }
 
     public void RespawnPlatforms() {
@@ -41,6 +49,8 @@ public class PlatformSpawner : MonoBehaviour {
     }
 
     public void SpawnPlatforms() {
+        playerBounds = player.GetComponent<SpriteRenderer>().bounds;
+
         for (int i = 0; i < numPlatforms; ++i) {
             GameObject platformPrefab = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
             GameObject platformInstance = Instantiate(platformPrefab);
@@ -67,6 +77,12 @@ public class PlatformSpawner : MonoBehaviour {
 
                 // Check for intersection with the goal platform bounds.
                 if (currentBounds.Intersects(goalPlatformBounds)) intersects = true;
+
+                // Check for intersection with the player bounds.
+                if (currentBounds.Intersects(playerBounds)) intersects = true;
+
+                // Check for intersection with the portal bounds.
+                if (currentBounds.Intersects(portalBounds)) intersects = true;
 
                 // If no intersection was found, the spawn location is okay.
                 if (!intersects) break;
