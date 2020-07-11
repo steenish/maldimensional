@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
@@ -75,6 +76,11 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         if (paused) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            audioManager.Play("BackToMenu");
+            SceneManager.LoadScene("StartScene");
+        }
 
         float move = 0.0f;
         bool jump = false;
