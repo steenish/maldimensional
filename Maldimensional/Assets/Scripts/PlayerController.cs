@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Rigidbody2D rigidbody;
     [SerializeField]
+    private Transform spawnPoint;
+    [SerializeField]
     private Animator animator;
     [SerializeField]
     private Transform feetTransform;
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float movementSmoothing = 0.05f;
     [SerializeField]
-    private Vector3 feetExtent;
+    private float feetExtentY;
     [SerializeField]
     private PlatformSpawner platformSpawner;
     [SerializeField]
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour {
     private bool jetPacking = false;
     private bool paused = true;
     private LayerMask groundMask;
+    private Vector3 feetExtent;
     private Vector3 velocity;
 
     private void OnEnable() {
@@ -57,10 +60,14 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake() {
         groundMask = LayerMask.GetMask(new string[] { "Ground" });
+        feetExtent = GetComponent<Collider2D>().bounds.size;
+        feetExtent.y = feetExtentY;
     }
 
     private void Start() {
         audioManager = FindObjectOfType<AudioManager>();
+
+        transform.position = spawnPoint.position;
     }
 
     void Update() {
@@ -87,12 +94,16 @@ public class PlayerController : MonoBehaviour {
         isGrounded = false;
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(feetTransform.position, feetExtent, 0.0f, groundMask);
-        foreach (Collider2D collider in colliders) {
-            if (collider.gameObject != gameObject) {
-                isGrounded = true;
-                jetPacking = false;
+        if (rigidbody.velocity.y == 0.0f) {
+            foreach (Collider2D collider in colliders) {
+                if (collider.gameObject != gameObject) {
+                    isGrounded = true;
+                    jetPacking = false;
+                }
             }
         }
+        
+        Debug.Log(isGrounded);
     }
 
     private void Move(float move, bool jump, bool holdJump) {

@@ -15,7 +15,6 @@ public class AudioManager : MonoBehaviour {
 
     private static AudioManager instance;
 
-
     private void OnEnable() {
         SceneManager.sceneLoaded += PlayNewSceneSounds;
     }
