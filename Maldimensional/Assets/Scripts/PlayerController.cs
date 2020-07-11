@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Rigidbody2D rigidbody;
     [SerializeField]
+    private Animator animator;
+    [SerializeField]
     private Transform feetTransform;
     [SerializeField]
     private float speed = 1.0f;
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour {
     private PlatformSpawner platformSpawner;
 #pragma warning restore
 
+    private bool facingRight = true;
     private bool isGrounded = false;
     private bool jetPacking = false;
     private LayerMask groundMask;
@@ -73,13 +76,21 @@ public class PlayerController : MonoBehaviour {
         Vector3 targetVelocity = new Vector2(move * speed, rigidbody.velocity.y);
         rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, targetVelocity, ref velocity, movementSmoothing);
 
+        animator.SetBool("Grounded", isGrounded);
+        animator.SetBool("Boosting", false);
+        animator.SetBool("HasFuel", FuelLeft());
+        animator.SetFloat("HorizontalSpeed", Mathf.Abs(rigidbody.velocity.x));
+
+        if ((move < 0 && facingRight) || (move > 0 && !facingRight)) {
+            Flip();
+        }
+
         if (isGrounded && jump) {
             rigidbody.AddForce(Vector2.up * jumpForceMagnitude);
+
         } else if (jump) {
             jetPacking = true;
-            if (FuelLeft()) {
-                Scramble();
-            }
+            Scramble();
         }
 
         if (!isGrounded && jetPacking && holdJump) {
@@ -88,6 +99,8 @@ public class PlayerController : MonoBehaviour {
 
                 Vector3 jetpackTargetVelocity = new Vector2(rigidbody.velocity.x, jetpackSpeed);
                 rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, jetpackTargetVelocity, ref velocity, movementSmoothing);
+
+                animator.SetBool("Boosting", true);
             }
         }
     }
@@ -98,5 +111,10 @@ public class PlayerController : MonoBehaviour {
 
     private void Scramble() {
         platformSpawner.RespawnPlatforms();
+    }
+
+    private void Flip() {
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        facingRight = !facingRight;
     }
 }
