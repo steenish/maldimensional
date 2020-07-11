@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
 
     private AudioManager audioManager;
     private bool facingRight = true;
-    private bool isGrounded = false;
+    private bool isGrounded = true;
     private bool jetPacking = false;
     private bool paused = true;
     private LayerMask groundMask;
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Start() {
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = AudioManager.instance;
 
         transform.position = spawnPoint.position;
     }
@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate() {
         if (paused) return;
 
+        bool wasGrounded = isGrounded;
         isGrounded = false;
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(feetTransform.position, feetExtent, 0.0f, groundMask);
@@ -107,6 +108,11 @@ public class PlayerController : MonoBehaviour {
             if (collider.gameObject != gameObject) {
                 isGrounded = true;
                 jetPacking = false;
+
+                if (!wasGrounded) {
+                    audioManager.Play("Landing");
+                    Debug.Log("play landing");
+                }
             }
         }
     }
@@ -126,8 +132,8 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (isGrounded && jump) {
+            audioManager.Play("Jump");
             rigidbody.AddForce(Vector2.up * jumpForceMagnitude);
-
         } else if (jump) {
             jetPacking = true;
             Scramble();
@@ -141,7 +147,12 @@ public class PlayerController : MonoBehaviour {
                 rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, jetpackTargetVelocity, ref velocity, movementSmoothing);
 
                 animator.SetBool("Boosting", true);
+                audioManager.Play("Boosting");
+            } else {
+                audioManager.Stop("Boosting");
             }
+        } else {
+            audioManager.Stop("Boosting");
         }
     }
 

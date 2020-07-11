@@ -21,12 +21,12 @@ public class Sound {
 
     [Range(0.0f, 1.0f)]
     [SerializeField]
-    private float _volume;
+    private float _volume = 0.5f;
     public float volume { get => _volume; private set => _volume = value; }
 
     [Range(0.1f, 3.0f)]
     [SerializeField]
-    private float _pitch;
+    private float _pitch = 1.0f;
     public float pitch { get => _pitch; private set => _pitch = value; }
 
     public AudioSource source { get; set; }

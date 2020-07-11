@@ -7,9 +7,10 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
 
-    private static ScoreManager instance;
+    public int score { get; private set; } = 0;
 
-    private int score = 0;
+    public static ScoreManager instance;
+
     private TMP_Text scoreText;
     private TMP_Text highScoreText;
 

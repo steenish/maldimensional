@@ -8,7 +8,7 @@ public class BoundsChecking : MonoBehaviour {
     private ScoreManager scoreManager;
 
     private void Start() {
-        scoreManager = FindObjectOfType<ScoreManager>();
+        scoreManager = ScoreManager.instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
