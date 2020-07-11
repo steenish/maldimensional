@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour {
     private ScrambleBlinker blinker;
 #pragma warning restore
 
+    private AudioManager audioManager;
     private bool facingRight = true;
     private bool isGrounded = false;
     private bool jetPacking = false;
@@ -56,6 +57,10 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake() {
         groundMask = LayerMask.GetMask(new string[] { "Ground" });
+    }
+
+    private void Start() {
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     void Update() {
@@ -131,6 +136,8 @@ public class PlayerController : MonoBehaviour {
     private void Scramble() {
         platformSpawner.RespawnPlatforms();
         blinker.ScrambleBlink();
+
+        audioManager.Play("Scramble");
     }
 
     private void Flip() {
