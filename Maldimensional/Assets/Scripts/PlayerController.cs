@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-public class PlayerPhysics : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
 #pragma warning disable
     [SerializeField]
@@ -16,12 +16,21 @@ public class PlayerPhysics : MonoBehaviour {
     [SerializeField]
     private float jumpForceMagnitude = 1.0f;
     [SerializeField]
+    private float jetpackSpeed = 1.0f;
+    [SerializeField]
+    private Slider fuelSlider;
+    [SerializeField]
+    private float fuelConsumptionRate = 0.1f;
+    [SerializeField]
+    private float fuelRechargeRate = 0.2f;
+    [SerializeField]
     private float movementSmoothing = 0.05f;
     [SerializeField]
     private float feetRadius = 0.1f;
 #pragma warning restore
 
     private bool isGrounded = false;
+    private bool jetPacking = false;
     private LayerMask groundMask;
     private Vector3 velocity;
 
@@ -34,7 +43,19 @@ public class PlayerPhysics : MonoBehaviour {
     }
 
     void Update() {
-        
+        float move = 0.0f;
+        bool jump = false;
+        bool holdJump = false;
+
+        move = Input.GetAxis("Horizontal");
+        jump = Input.GetKeyDown(KeyCode.Space);
+        holdJump = Input.GetKey(KeyCode.Space);
+
+        Move(move, jump, holdJump);
+
+        if (isGrounded) {
+            fuelSlider.value += fuelRechargeRate;
+        }
     }
 
     private void FixedUpdate() {
@@ -44,11 +65,12 @@ public class PlayerPhysics : MonoBehaviour {
         foreach (Collider2D collider in colliders) {
             if (collider.gameObject != gameObject) {
                 isGrounded = true;
+                jetPacking = false;
             }
         }
     }
 
-    public void Move(float move, bool jump) {
+    public void Move(float move, bool jump, bool holdJump) {
 
         Vector3 targetVelocity = new Vector2(move * speed, rigidbody.velocity.y);
         rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, targetVelocity, ref velocity, movementSmoothing);
@@ -57,7 +79,17 @@ public class PlayerPhysics : MonoBehaviour {
             rigidbody.AddForce(Vector2.up * jumpForceMagnitude);
             Debug.Log("jump");
         } else if (jump) {
+            jetPacking = true;
+            // Do scrambling
+        }
 
+        if (!isGrounded && jetPacking && holdJump) {
+            if (fuelSlider.value > fuelSlider.minValue) {
+                fuelSlider.value -= fuelConsumptionRate;
+
+                Vector3 jetpackTargetVelocity = new Vector2(rigidbody.velocity.x, jetpackSpeed);
+                rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, jetpackTargetVelocity, ref velocity, movementSmoothing);
+            }
         }
     }
 }
