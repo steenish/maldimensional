@@ -43,4 +43,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31a4d533b2728a408fb5cf4d418de82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - _name: Theme
+    _audioClip: {fileID: 8300000, guid: fee27cc61ad294942bd5363bf884fce5, type: 3}
+    _loop: 1
+    _volume: 0.5
+    _pitch: 1
+  - _name: Scramble
+    _audioClip: {fileID: 8300000, guid: 5939db501206ff143b9dc0e6d40aa8a7, type: 3}
+    _loop: 0
+    _volume: 0.5
+    _pitch: 1
+  - _name: Teleport
+    _audioClip: {fileID: 8300000, guid: e325ed324d84c3448ba4a0aca9e68280, type: 3}
+    _loop: 0
+    _volume: 0.5
+    _pitch: 1
+  - _name: StartGame
+    _audioClip: {fileID: 8300000, guid: 37c3d78ae42382844b021cf60efa03ed, type: 3}
+    _loop: 0
+    _volume: 0.1
+    _pitch: 1
+  - _name: Jump
+    _audioClip: {fileID: 8300000, guid: bd20749c535f2894e8c6b8f085928dd4, type: 3}
+    _loop: 0
+    _volume: 0.5
+    _pitch: 1
+  - _name: Landing
+    _audioClip: {fileID: 8300000, guid: c46881f4f838a12468295111b2db355f, type: 3}
+    _loop: 0
+    _volume: 0.8
+    _pitch: 1
+  - _name: BackToMenu
+    _audioClip: {fileID: 8300000, guid: ea5f503a4a3085746907221b5472c242, type: 3}
+    _loop: 0
+    _volume: 0.1
+    _pitch: 1
+  - _name: Boosting
+    _audioClip: {fileID: 8300000, guid: 8d192a3e2fe97434bb5242d1eb04e997, type: 3}
+    _loop: 1
+    _volume: 0.3
+    _pitch: 1

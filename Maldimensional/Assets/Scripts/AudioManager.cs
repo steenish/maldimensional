@@ -13,7 +13,9 @@ public class AudioManager : MonoBehaviour {
     private Sound[] sounds;
 #pragma warning restore
 
-    private static AudioManager instance;
+    public static AudioManager instance;
+
+    private List<Sound> currentlyLooping;
 
     private void OnEnable() {
         SceneManager.sceneLoaded += PlayNewSceneSounds;
@@ -45,11 +47,25 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    private void Start() {
+        currentlyLooping = new List<Sound>();
+
+        Play("Theme");
+    }
+
     public void Play(string name) {
         Sound sound = Array.Find(sounds, e => e.name == name);
 
         if (sound != null) {
-            sound.source.Play();
+            // If sound is not a looping sound, or is a looping sound and currently not playing, play the sound.
+            if (!sound.loop || (sound.loop && !currentlyLooping.Contains(sound))) {
+                sound.source.Play();
+
+                // Add the looping sound to currently playing looping sounds.
+                if (sound.loop) {
+                    currentlyLooping.Add(sound);
+                }
+            }
         } else {
             Debug.LogWarning("Audio clip " + name + " not found. No audio played.");
         }
@@ -60,6 +76,11 @@ public class AudioManager : MonoBehaviour {
 
         if (sound != null) {
             sound.source.Stop();
+            
+            // If the sound was a loop, remove the sound from the currently playing looping sounds.
+            if (sound.loop) {
+                currentlyLooping.Remove(sound);
+            }
         } else {
             Debug.LogWarning("Audio clip " + name + " not found. No audio stopped.");
         }
