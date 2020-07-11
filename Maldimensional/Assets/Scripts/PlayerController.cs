@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float feetExtentY;
     [SerializeField]
+    private float feetExtentShrinkX;
+    [SerializeField]
     private PlatformSpawner platformSpawner;
     [SerializeField]
     private ScrambleBlinker blinker;
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake() {
         groundMask = LayerMask.GetMask(new string[] { "Ground" });
-        feetExtent = GetComponent<Collider2D>().bounds.size;
+        feetExtent = GetComponent<Collider2D>().bounds.size - Vector3.right * feetExtentShrinkX;
         feetExtent.y = feetExtentY;
     }
 
@@ -94,16 +97,12 @@ public class PlayerController : MonoBehaviour {
         isGrounded = false;
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(feetTransform.position, feetExtent, 0.0f, groundMask);
-        if (rigidbody.velocity.y == 0.0f) {
-            foreach (Collider2D collider in colliders) {
-                if (collider.gameObject != gameObject) {
-                    isGrounded = true;
-                    jetPacking = false;
-                }
+        foreach (Collider2D collider in colliders) {
+            if (collider.gameObject != gameObject) {
+                isGrounded = true;
+                jetPacking = false;
             }
         }
-        
-        Debug.Log(isGrounded);
     }
 
     private void Move(float move, bool jump, bool holdJump) {

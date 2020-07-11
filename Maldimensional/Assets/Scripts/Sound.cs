@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -18,10 +19,12 @@ public class Sound {
     private bool _loop;
     public bool loop { get => _loop; private set => _loop = value; }
 
+    [Range(0.0f, 1.0f)]
     [SerializeField]
     private float _volume;
     public float volume { get => _volume; private set => _volume = value; }
 
+    [Range(0.1f, 3.0f)]
     [SerializeField]
     private float _pitch;
     public float pitch { get => _pitch; private set => _pitch = value; }

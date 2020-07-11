@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BoundsChecking : MonoBehaviour {
+public class PortalController : MonoBehaviour {
 
     private ScoreManager scoreManager;
 
@@ -13,7 +13,9 @@ public class BoundsChecking : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
-            scoreManager.ResetScore();
+            scoreManager.IncrementScore();
+            scoreManager.SaveHighScore();
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

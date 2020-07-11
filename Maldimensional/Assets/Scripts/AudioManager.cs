@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour {
     }
 
     void Awake() {
-        // Handle asset loader instancing between scene loads.
+        // Handle audio manager instancing between scene loads.
         // If there is no instance, let this be the new instance, otherwise, destroy this object.
         if (instance == null) {
             instance = this;
