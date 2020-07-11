@@ -30,6 +30,8 @@ public class ScoreManager : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void IncrementScore() {
@@ -48,26 +50,6 @@ public class ScoreManager : MonoBehaviour {
     }
 
     private void NewSceneDisplayScores(Scene scene, LoadSceneMode mode) {
-        switch (scene.name) {
-            case "MainScene":
-                scoreText = GameObject.Find("ScoreText").GetComponent<TMP_Text>();
-                highScoreText = GameObject.Find("HighScoreText").GetComponent<TMP_Text>();
-
-                scoreText.text = FormatScoreText(score);
-                highScoreText.text = FormatScoreText(PlayerPrefs.GetInt("HighScore"));
-                break;
-            case "StartScene":
-                highScoreText = GameObject.Find("HighScoreText").GetComponent<TMP_Text>();
-                highScoreText.text = FormatScoreText(PlayerPrefs.GetInt("HighScore"));
-                break;
-        }
-
-        //StartCoroutine(TimeActionsWithEndOfFrame(scene));
-    }
-
-    IEnumerator TimeActionsWithEndOfFrame(Scene scene) {
-        yield return new WaitForEndOfFrame();
-
         switch (scene.name) {
             case "MainScene":
                 scoreText = GameObject.Find("ScoreText").GetComponent<TMP_Text>();

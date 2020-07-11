@@ -5,15 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class PortalController : MonoBehaviour {
 
-#pragma warning disable
-    [SerializeField]
     private ScoreManager scoreManager;
-#pragma warning restore
 
-    private void OnTriggerEnter(Collider other) {
-        scoreManager.IncrementScore();
-        scoreManager.SaveHighScore();
+    private void Start() {
+        scoreManager = FindObjectOfType<ScoreManager>();
+    }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Player")) {
+            scoreManager.IncrementScore();
+            scoreManager.SaveHighScore();
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }
