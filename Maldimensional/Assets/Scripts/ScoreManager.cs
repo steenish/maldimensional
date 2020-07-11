@@ -59,8 +59,6 @@ public class ScoreManager : MonoBehaviour {
                 highScoreText.text = FormatScoreText(PlayerPrefs.GetInt("HighScore"));
                 break;
             case "StartScene":
-                highScoreText = GameObject.Find("HighScoreText").GetComponent<TMP_Text>();
-                highScoreText.text = FormatScoreText(PlayerPrefs.GetInt("HighScore"));
                 break;
         }
     }
