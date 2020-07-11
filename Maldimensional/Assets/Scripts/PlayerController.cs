@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour {
     private float movementSmoothing = 0.05f;
     [SerializeField]
     private float feetRadius = 0.1f;
+    [SerializeField]
+    private PlatformSpawner platformSpawner;
 #pragma warning restore
 
     private bool isGrounded = false;
@@ -36,10 +38,6 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake() {
         groundMask = LayerMask.GetMask(new string[] { "Ground" });
-    }
-
-    void Start() {
-        
     }
 
     void Update() {
@@ -70,26 +68,35 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void Move(float move, bool jump, bool holdJump) {
+    private void Move(float move, bool jump, bool holdJump) {
 
         Vector3 targetVelocity = new Vector2(move * speed, rigidbody.velocity.y);
         rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, targetVelocity, ref velocity, movementSmoothing);
 
         if (isGrounded && jump) {
             rigidbody.AddForce(Vector2.up * jumpForceMagnitude);
-            Debug.Log("jump");
         } else if (jump) {
             jetPacking = true;
-            // Do scrambling
+            if (FuelLeft()) {
+                Scramble();
+            }
         }
 
         if (!isGrounded && jetPacking && holdJump) {
-            if (fuelSlider.value > fuelSlider.minValue) {
+            if (FuelLeft()) {
                 fuelSlider.value -= fuelConsumptionRate;
 
                 Vector3 jetpackTargetVelocity = new Vector2(rigidbody.velocity.x, jetpackSpeed);
                 rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, jetpackTargetVelocity, ref velocity, movementSmoothing);
             }
         }
+    }
+
+    private bool FuelLeft() {
+        return fuelSlider.value > fuelSlider.minValue;
+    }
+
+    private void Scramble() {
+        platformSpawner.RespawnPlatforms();
     }
 }
