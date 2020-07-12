@@ -739,7 +739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535970498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 1.5, z: 0}
+  m_LocalPosition: {x: -1, y: 1.344, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2523727497422301559}
@@ -1143,7 +1143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180404372}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 1.844, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6074512707547606002}
@@ -2319,11 +2319,11 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.156}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3, y: 2}
+    oldSize: {x: 3, y: 2.3125}
     newSize: {x: 3, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2332,10 +2332,10 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -1.5, y: 1}
-      - {x: -1.5, y: -0.03125}
-      - {x: -0.53125, y: -1}
-      - {x: 0.53125, y: -1}
-      - {x: 1.5, y: -0.03125}
+      - {x: -1.4990435, y: 0.0003067106}
+      - {x: -0.49951267, y: -1.0031735}
+      - {x: 0.49760246, y: -1.0028044}
+      - {x: 1.5014019, y: 0.0009955019}
       - {x: 1.5, y: 1}
 --- !u!212 &1796589990797793290
 SpriteRenderer:
@@ -2568,11 +2568,11 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.156}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3, y: 2}
+    oldSize: {x: 3, y: 2.3125}
     newSize: {x: 3, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2581,10 +2581,10 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -1.5, y: 1}
-      - {x: -1.5, y: -0.03125}
-      - {x: -0.53125, y: -1}
-      - {x: 0.53125, y: -1}
-      - {x: 1.5, y: -0.03125}
+      - {x: -1.5012965, y: -0.0014315993}
+      - {x: -0.50143147, y: -1}
+      - {x: 0.501873, y: -1.0032642}
+      - {x: 1.5, y: -0.00024069846}
       - {x: 1.5, y: 1}
 --- !u!212 &8045065857212291727
 SpriteRenderer:
@@ -2624,7 +2624,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1460725955
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: bb19a77fcf73df04c89be1144af299d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
