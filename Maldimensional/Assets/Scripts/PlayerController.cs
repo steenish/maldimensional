@@ -12,11 +12,11 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Rigidbody2D rigidbody;
     [SerializeField]
+    private BoxCollider2D collider;
+    [SerializeField]
     private Transform spawnPoint;
     [SerializeField]
     private Animator animator;
-    [SerializeField]
-    private Transform feetTransform;
     [SerializeField]
     private float speed = 1.0f;
     [SerializeField]
@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float feetExtentY;
     [SerializeField]
-    private float feetExtentShrinkX;
-    [SerializeField]
     private PlatformSpawner platformSpawner;
     [SerializeField]
     private ScrambleBlinker blinker;
@@ -47,7 +45,6 @@ public class PlayerController : MonoBehaviour {
     private bool jetPacking = false;
     private bool paused = true;
     private LayerMask groundMask;
-    private Vector3 feetExtent;
     private Vector3 velocity;
 
     private void OnEnable() {
@@ -64,8 +61,6 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake() {
         groundMask = LayerMask.GetMask(new string[] { "Ground" });
-        feetExtent = GetComponent<Collider2D>().bounds.size - Vector3.right * feetExtentShrinkX;
-        feetExtent.y = feetExtentY;
     }
 
     private void Start() {
@@ -99,26 +94,27 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.DrawCube(feetTransform.position, feetExtent);
-    }
-
     private void FixedUpdate() {
         if (paused) return;
 
         bool wasGrounded = isGrounded;
         isGrounded = false;
 
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(feetTransform.position, feetExtent, 0.0f, groundMask);
-        foreach (Collider2D collider in colliders) {
-            if (collider.gameObject != gameObject) {
-                isGrounded = true;
-                jetPacking = false;
+        RaycastHit2D raycastHit = Physics2D.BoxCast(collider.bounds.center, collider.bounds.size, 0.0f, Vector2.down, feetExtentY, groundMask);
+        if (raycastHit.collider != null && raycastHit.normal == Vector2.up) {
+            isGrounded = true;
+            jetPacking = false;
 
-                if (!wasGrounded) {
-                    audioManager.Play("Landing");
-                }
+            if (!wasGrounded) {
+                audioManager.Play("Landing");
             }
+        }
+        
+        if (Application.isEditor) {
+            Color debugDrawColor = (raycastHit.collider != null) ? Color.green : Color.red;
+            Debug.DrawRay(collider.bounds.center + new Vector3(collider.bounds.extents.x, 0), Vector2.down * (collider.bounds.extents.y + feetExtentY), debugDrawColor);
+            Debug.DrawRay(collider.bounds.center - new Vector3(collider.bounds.extents.x, 0), Vector2.down * (collider.bounds.extents.y + feetExtentY), debugDrawColor);
+            Debug.DrawRay(collider.bounds.center - new Vector3(collider.bounds.extents.x, collider.bounds.extents.y + feetExtentY), Vector2.right * (collider.bounds.size.x), debugDrawColor);
         }
     }
 

@@ -2076,6 +2076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 1902554747}
+  collider: {fileID: 1902554746}
   spawnPoint: {fileID: 535970499}
   animator: {fileID: 1902554750}
   feetTransform: {fileID: 1296743475}
@@ -2086,7 +2087,7 @@ MonoBehaviour:
   fuelConsumptionRate: 3
   fuelRechargeRate: 20
   movementSmoothing: 0.05
-  feetExtentY: 0.05
+  feetExtentY: 0.1
   feetExtentShrinkX: 0.05
   platformSpawner: {fileID: 1106146622}
   blinker: {fileID: 35631900}
