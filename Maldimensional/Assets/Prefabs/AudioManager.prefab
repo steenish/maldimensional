@@ -87,8 +87,8 @@ MonoBehaviour:
   - _name: Death
     _audioClip: {fileID: 8300000, guid: 3bad622801459ac4bb947fdd30b97c4c, type: 3}
     _loop: 0
-    _volume: 0.3
-    _pitch: 1
+    _volume: 0.7
+    _pitch: 2
   - _name: Menu
     _audioClip: {fileID: 8300000, guid: 947c6d8a288373b469d7555947d2807c, type: 3}
     _loop: 1

@@ -8,34 +8,37 @@ public class ScrambleBlinker : MonoBehaviour {
 	[SerializeField]
 	private CanvasGroup canvasGroup;
 	[SerializeField]
-	private float blinkTime = 0.05f;
-	[SerializeField]
-	private int fadeSteps = 20;
+	private int blinkFrames = 20;
 #pragma warning restore
 
+	private bool isBlinking;
+
 	public void ScrambleBlink() {
-		StartCoroutine(Blink());
+		if (!isBlinking) {
+			isBlinking = true;
+			StartCoroutine(Blink());
+		}
 	}
 
 	IEnumerator Blink() {
-		float fadeStepDuration = blinkTime / fadeSteps;
-		float fadeAmount = 2.0f / fadeSteps;
+		float fadeAmountPerFrame = 2.0f / blinkFrames;
 
-		for (int i = 0; i < fadeSteps / 2; ++i) {
-			canvasGroup.alpha += fadeAmount;
-			yield return new WaitForSecondsRealtime(fadeStepDuration);
+		for (int i = 0; i < blinkFrames / 2; ++i) {
+			canvasGroup.alpha += fadeAmountPerFrame;
+			yield return new WaitForEndOfFrame();
 		}
 
 		canvasGroup.alpha = 1.0f;
 
-		for (int i = 0; i < fadeSteps / 2; ++i) {
-			canvasGroup.alpha -= fadeAmount;
-			yield return new WaitForSecondsRealtime(fadeStepDuration);
+		for (int i = 0; i < blinkFrames / 2; ++i) {
+			canvasGroup.alpha -= fadeAmountPerFrame;
+			yield return new WaitForEndOfFrame();
 		}
 
 		canvasGroup.alpha = 0.0f;
 		canvasGroup.interactable = false;
 
+		isBlinking = false;
 		yield return null;
 	}
 }
