@@ -16,7 +16,6 @@ public class PortalController : MonoBehaviour {
         if (collision.CompareTag("Player")) {
             scoreManager.IncrementScore();
             scoreManager.SaveHighScore();
-            Debug.Log(scoreManager.score);
             AudioManager.instance.Play("Teleport");
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

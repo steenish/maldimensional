@@ -315,8 +315,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281005834
+  m_fontColor: {r: 0.038800023, g: 0.97, b: 0.16296013, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -951,11 +951,12 @@ MonoBehaviour:
   - {fileID: 6469776334396959161, guid: 4b1dd85b0ae80184ea87e1ac7e440ed3, type: 3}
   - {fileID: 6632608738487587612, guid: eaac86cdac4b2f248a8ca0dc8ef71067, type: 3}
   - {fileID: 4153421033752520737, guid: b0b424e272927f444af8d4df59f9e01d, type: 3}
+  - {fileID: 128999543717539160, guid: d602f07c64197a6429011057c0473f21, type: 3}
   spawnPlatform: {fileID: 9166999237387288561}
   goalPlatform: {fileID: 611553774296350068}
   player: {fileID: 1902554744}
   portal: {fileID: 1180404372}
-  numPlatforms: 5
+  numPlatforms: 9
   intersectMargin: 1
   spawnRetries: 10
 --- !u!4 &1106146623
@@ -1283,8 +1284,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281005834
+  m_fontColor: {r: 0.039215688, g: 0.96862745, b: 0.16470589, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2236,7 +2237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9c73d2c97d393408dcca18f7c147ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxYPerturbance: 1.5
+  maxYPerturbance: 1.2
 --- !u!60 &1790785280906373382
 PolygonCollider2D:
   m_ObjectHideFlags: 0

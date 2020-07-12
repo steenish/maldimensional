@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         audioManager = AudioManager.instance;
+        audioManager.Play("Theme");
 
         transform.position = spawnPoint.position;
     }
@@ -78,6 +79,7 @@ public class PlayerController : MonoBehaviour {
         if (paused) return;
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
+            audioManager.Stop("Theme");
             audioManager.Play("BackToMenu");
             SceneManager.LoadScene("StartScene");
         }
@@ -111,7 +113,6 @@ public class PlayerController : MonoBehaviour {
 
                 if (!wasGrounded) {
                     audioManager.Play("Landing");
-                    Debug.Log("play landing");
                 }
             }
         }
