@@ -37,12 +37,21 @@ public class PlayerController : MonoBehaviour {
     private PlatformSpawner platformSpawner;
     [SerializeField]
     private ScrambleBlinker blinker;
+    [SerializeField]
+    private GameObject dustPrefab;
+    [SerializeField]
+    private Transform dustSpawnPoint;
+    [SerializeField]
+    private GameObject smokePrefab;
+    [SerializeField]
+    private Transform smokeSpawnPoint;
 #pragma warning restore
 
     private AudioManager audioManager;
     private bool facingRight = true;
     private bool isGrounded = true;
     private bool jetPacking = false;
+    private bool wasBoosting = false;
     private bool paused = true;
     private LayerMask groundMask;
     private Vector3 velocity;
@@ -107,6 +116,7 @@ public class PlayerController : MonoBehaviour {
 
             if (!wasGrounded) {
                 audioManager.Play("Landing");
+                SpawnDust();
             }
         }
         
@@ -134,6 +144,7 @@ public class PlayerController : MonoBehaviour {
 
         if (isGrounded && jump) {
             audioManager.Play("Jump");
+            SpawnDust();
             rigidbody.AddForce(Vector2.up * jumpForceMagnitude);
         } else if (jump) {
             jetPacking = true;
@@ -149,11 +160,19 @@ public class PlayerController : MonoBehaviour {
 
                 animator.SetBool("Boosting", true);
                 audioManager.Play("Boosting");
+
+                if (!wasBoosting) {
+                    SpawnSmoke();
+                }
+
+                wasBoosting = true;
             } else {
                 audioManager.Stop("Boosting");
+                wasBoosting = false;
             }
         } else {
             audioManager.Stop("Boosting");
+            wasBoosting = false;
         }
     }
 
@@ -171,5 +190,13 @@ public class PlayerController : MonoBehaviour {
     private void Flip() {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         facingRight = !facingRight;
+    }
+
+    private void SpawnDust() {
+        Instantiate(dustPrefab, dustSpawnPoint.position, Quaternion.identity);
+    }
+
+    private void SpawnSmoke() {
+        Instantiate(smokePrefab, smokeSpawnPoint.position, Quaternion.identity);
     }
 }
