@@ -20,6 +20,8 @@ public class PlatformSpawner : MonoBehaviour {
     [SerializeField]
     private float intersectMargin = 0.0f;
     [SerializeField]
+    private float playerIntersectMargin = 0.0f;
+    [SerializeField]
     private int spawnRetries = 10;
 #pragma warning restore
 
@@ -50,6 +52,7 @@ public class PlatformSpawner : MonoBehaviour {
 
     public void SpawnPlatforms() {
         playerBounds = player.GetComponent<SpriteRenderer>().bounds;
+        playerBounds.Expand(playerIntersectMargin);
 
         for (int i = 0; i < numPlatforms; ++i) {
             GameObject platformPrefab = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
@@ -94,7 +97,7 @@ public class PlatformSpawner : MonoBehaviour {
             }
 
             if (hopelessPlatform) {
-                Destroy(platformInstance);
+                DestroyImmediate(platformInstance);
             } else {
                 platforms.Add(platformInstance);
             }

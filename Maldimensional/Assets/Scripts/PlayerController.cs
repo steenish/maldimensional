@@ -99,6 +99,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private void OnDrawGizmos() {
+        Gizmos.DrawCube(feetTransform.position, feetExtent);
+    }
+
     private void FixedUpdate() {
         if (paused) return;
 
