@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameStarter : MonoBehaviour {
 
+    [SerializeField]
+    private GameObject logo;
+
     private void Start() {
         AudioManager.instance.Play("Menu");
+
+        Instantiate(logo);
     }
 
     void Update() {
