@@ -1425,6 +1425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeleportClip: {fileID: 7400000, guid: 13c115fae962699478624e6b049852c0, type: 2}
+  movementFrames: 50
 --- !u!61 &1180404376
 BoxCollider2D:
   m_ObjectHideFlags: 0
