@@ -57,9 +57,9 @@ public class CloudAnimator : MonoBehaviour {
     }
 
     void Update() {
-        leftClouds.transform.position += Vector3.left * deltaMovement * Time.deltaTime;
         centerClouds.transform.position += Vector3.left * deltaMovement * Time.deltaTime;
-        rightClouds.transform.position += Vector3.left * deltaMovement * Time.deltaTime;
+        leftClouds.transform.position = centerClouds.transform.position - Vector3.right * 20.0f;
+        rightClouds.transform.position = centerClouds.transform.position + Vector3.right * 20.0f;
 
         if (centerClouds.transform.position.x <= 0.0f) {
             leftClouds.transform.position = rightClouds.transform.position + Vector3.right * 20.0f;
