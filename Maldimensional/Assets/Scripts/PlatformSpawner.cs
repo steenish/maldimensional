@@ -100,6 +100,7 @@ public class PlatformSpawner : MonoBehaviour {
                 DestroyImmediate(platformInstance);
             } else {
                 platforms.Add(platformInstance);
+                platformInstance.GetComponentsInChildren<PolygonCollider2D>(true)[0].enabled = true;
             }
         }
     }
