@@ -49,8 +49,6 @@ public class AudioManager : MonoBehaviour {
 
     private void Start() {
         currentlyLooping = new List<Sound>();
-
-        Play("Theme");
     }
 
     public void Play(string name) {
