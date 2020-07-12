@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CloudAnimator : MonoBehaviour {
 
@@ -18,6 +19,36 @@ public class CloudAnimator : MonoBehaviour {
     private GameObject leftClouds;
     private GameObject centerClouds;
     private GameObject rightClouds;
+
+    private static CloudAnimator instance;
+
+    private void OnEnable() {
+        SceneManager.sceneLoaded += DeleteOnWrongScene;
+    }
+
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= DeleteOnWrongScene;
+    }
+
+    void Awake() {
+        // Handle audio manager instancing between scene loads.
+        // If there is no instance, let this be the new instance, otherwise, destroy this object.
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+            return;
+        }
+
+        // If this object was set as the instance, make sure it is not destroyed on scene loads.
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void DeleteOnWrongScene(Scene scene, LoadSceneMode mode) {
+        if (!scene.name.Equals("MainScene")) {
+            Destroy(gameObject);
+        }
+    }
 
     void Start() {
         leftClouds = initialLeftClouds;
