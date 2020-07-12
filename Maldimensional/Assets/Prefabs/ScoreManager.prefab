@@ -43,3 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd9ccf725630674d9c714804088a4c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beatDevsSprite: {fileID: 0}
+  devHighScore: 41
