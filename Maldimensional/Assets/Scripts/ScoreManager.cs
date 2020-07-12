@@ -66,7 +66,10 @@ public class ScoreManager : MonoBehaviour {
 
                 if (PlayerPrefs.GetInt("HighScore") > devHighScore) {
                     scoreboard.GetComponent<SpriteRenderer>().sprite = beatDevsSprite;
-                    // Maybe change position etc.
+                    scoreboard.transform.localPosition = new Vector3(scoreboard.transform.localPosition.x, 258.92f, scoreboard.transform.localPosition.z);
+                    scoreText.transform.localPosition = new Vector3(scoreText.transform.localPosition.x, 0.75f, scoreText.transform.localPosition.z);
+                    highScoreText.transform.localPosition = new Vector3(highScoreText.transform.localPosition.x, 0.75f, highScoreText.transform.localPosition.z);
+
                 }
 
                 scoreText.text = FormatScoreText(score);
