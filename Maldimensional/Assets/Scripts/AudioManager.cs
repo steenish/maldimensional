@@ -38,6 +38,8 @@ public class AudioManager : MonoBehaviour {
         // If this object was set as the instance, make sure it is not destroyed on scene loads.
         DontDestroyOnLoad(gameObject);
 
+        currentlyLooping = new List<Sound>();
+
         foreach (Sound sound in sounds) {
             sound.source = gameObject.AddComponent<AudioSource>();
             sound.source.clip = sound.clip;
@@ -45,10 +47,6 @@ public class AudioManager : MonoBehaviour {
             sound.source.volume = sound.volume;
             sound.source.pitch = sound.pitch;
         }
-    }
-
-    private void Start() {
-        currentlyLooping = new List<Sound>();
     }
 
     public void Play(string name) {
