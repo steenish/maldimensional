@@ -7,6 +7,13 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
 
+#pragma warning disable
+    [SerializeField]
+    private Sprite beatDevsSprite;
+    [SerializeField]
+    private int devHighScore;
+#pragma warning restore
+
     public int score { get; private set; } = 0;
 
     public static ScoreManager instance;
@@ -55,6 +62,12 @@ public class ScoreManager : MonoBehaviour {
             case "MainScene":
                 scoreText = GameObject.Find("ScoreText").GetComponent<TMP_Text>();
                 highScoreText = GameObject.Find("HighScoreText").GetComponent<TMP_Text>();
+                GameObject scoreboard = GameObject.Find("Scoreboard");
+
+                if (PlayerPrefs.GetInt("HighScore") > devHighScore) {
+                    scoreboard.GetComponent<SpriteRenderer>().sprite = beatDevsSprite;
+                    // Maybe change position etc.
+                }
 
                 scoreText.text = FormatScoreText(score);
                 highScoreText.text = FormatScoreText(PlayerPrefs.GetInt("HighScore"));
