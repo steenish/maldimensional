@@ -90,7 +90,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6632608738487587612}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 3e7a1edd83d89834aa70b46efff17e6d, type: 2}
   m_IsTrigger: 0
@@ -108,13 +108,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.001296103, y: 1.5007765}
-      - {x: -0.0029301047, y: 0.49334836}
-      - {x: -0.9977426, y: 0.50416124}
-      - {x: -1, y: -0.49906093}
-      - {x: -0.014638143, y: -1.4841104}
-      - {x: 0.016804915, y: -1.4833882}
-      - {x: 1, y: -0.49791428}
+    - - {x: 0, y: 1.5}
+      - {x: 0, y: 0.5}
+      - {x: -1, y: 0.5}
+      - {x: -1, y: -0.5}
+      - {x: 0, y: -1.5}
+      - {x: 1, y: -0.5}
       - {x: 1, y: 1.5}
 --- !u!114 &-722148576848725635
 MonoBehaviour:

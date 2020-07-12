@@ -1198,8 +1198,9 @@ MonoBehaviour:
   goalPlatform: {fileID: 611553774296350068}
   player: {fileID: 1902554744}
   portal: {fileID: 1180404372}
-  numPlatforms: 9
+  numPlatforms: 11
   intersectMargin: 1
+  playerIntersectMargin: 0.2
   spawnRetries: 10
 --- !u!4 &1106146623
 Transform:
@@ -2082,9 +2083,9 @@ MonoBehaviour:
   jetpackSpeed: 5
   fuelSlider: {fileID: 721408782}
   fuelConsumptionRate: 3
-  fuelRechargeRate: 4
+  fuelRechargeRate: 20
   movementSmoothing: 0.05
-  feetExtentY: 0.2
+  feetExtentY: 0.05
   feetExtentShrinkX: 0.05
   platformSpawner: {fileID: 1106146622}
   blinker: {fileID: 35631900}

@@ -65,14 +65,14 @@ MonoBehaviour:
     _volume: 0.1
     _pitch: 1
   - _name: Jump
-    _audioClip: {fileID: 8300000, guid: bd20749c535f2894e8c6b8f085928dd4, type: 3}
+    _audioClip: {fileID: 8300000, guid: 594a994b8a12a5c4588f6e7a36dad307, type: 3}
     _loop: 0
-    _volume: 0.5
+    _volume: 0.3
     _pitch: 1
   - _name: Landing
-    _audioClip: {fileID: 8300000, guid: c46881f4f838a12468295111b2db355f, type: 3}
+    _audioClip: {fileID: 8300000, guid: 92789c2130bdc1747835bc827f02fe3f, type: 3}
     _loop: 0
-    _volume: 1
+    _volume: 0.3
     _pitch: 1
   - _name: BackToMenu
     _audioClip: {fileID: 8300000, guid: ea5f503a4a3085746907221b5472c242, type: 3}
