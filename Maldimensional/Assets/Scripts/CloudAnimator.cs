@@ -31,7 +31,7 @@ public class CloudAnimator : MonoBehaviour {
     }
 
     void Awake() {
-        // Handle audio manager instancing between scene loads.
+        // Handle cloud animator instancing between scene loads.
         // If there is no instance, let this be the new instance, otherwise, destroy this object.
         if (instance == null) {
             instance = this;
